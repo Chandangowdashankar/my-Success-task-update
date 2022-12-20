@@ -1,0 +1,61 @@
+Task Name : jenkins file for diffrent choice parameter and diffrent node deploy
+
+In this task we have 2 choice parameter with dev and test along with 2 node with awsslave2 and aws salve1 (node should be connected to master)
+
+Job Name -- pipeline job in jenkins
+
+
+
+Code ---->
+
+pipeline {
+    agent any
+    
+     parameters {
+  choice choices: ['dev', 'test'], name: 'env'
+}
+
+    stages {
+        stage('dev') {
+             when {
+                expression { 
+                   return params.env == 'dev'
+                }
+            }
+            
+            
+            
+            steps {
+                node('awsslave2') {
+            }
+            
+                echo 'Hello World'
+                
+        
+                
+            }
+
+        }
+        stage('test') {
+             when {
+                expression { 
+                   return params.env == 'test'
+                }
+            }
+            
+            
+            
+            steps {
+                node('aws salve1') {
+            }
+            
+                echo 'Hello World'
+                
+        
+                
+            }
+
+        }
+        
+    }
+}
