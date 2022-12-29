@@ -81,10 +81,3 @@ command - nvm install 14.19.3
 command - nvm use 16.15.0
 
 using this 3 method we can install npm and regarding node version
-
-
-
-
-
-
-
