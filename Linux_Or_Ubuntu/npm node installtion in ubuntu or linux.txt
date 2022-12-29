@@ -1,0 +1,90 @@
+----npm and node installtion on ubuntu----
+
+Node.js is a cross-platform, open-source JavaScript runtime environment built on Chrome’s JavaScript, 
+designed to execute JavaScript code outside a web browser. 
+It is generally used to build fast and scalable server-side and networking applications. 
+npm is the default package manager for Node.js and also the name of the world’s largest software registry.
+
+
+*Method 1*
+
+****Installing Node.js and npm from the Ubuntu repository****
+
+command--
+
+sudo apt update -y
+sudo apt install nodejs npm -y
+
+At the time of writing this Notr, the Node.js version included in the default Ubuntu 22.04 repositories is v12.22.9 which is an older TLS version.
+and npm version is 8.5.1
+
+*Method 2*
+
+****Installing Node.js and npm from NodeSource****
+
+NodeSource is a company focused on providing enterprise-grade Node support. It maintains an APT repository containing multiple Node.js versions.
+ Use this repository if your application requires a specific version of Node.js.
+
+command--
+
+sudo curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+then
+sudo apt install nodejs -y
+( if u are facing any dpkg installtion problem use sudo apt autoclean and autoremove command)
+
+like this way, we can replace specific version in curl command and do installtion of an nodejs and npm
+
+Example -- for 16 version 
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+ Note- we need to change the curl command version
+
+*Method 3*
+
+****Installing Node.js and npm using NVM****
+
+NVM (Node Version Manager) is a bash script that allows you to manage multiple Node.js versions on a per-user basis. 
+With NVM you can install and uninstall any Node.js version that you want to use or test.
+
+Visit the nvm GitHub repository page and copy either the curl or wget command to download and install the nvm script:
+
+command--
+
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+Note -- Do not use sudo as it will enable nvm for the root user.
+
+* The script will clone the project’s repository from Github to the ~/.nvm directory:
+
+command -- . ~/.nvm/nvm.sh
+
+to check installtion of nvm
+
+command -- nvm -v or nvm --version
+
+command - nvm list-remote
+--to check available node version
+
+command - nvm install node
+--To install the latest available version of Node.js
+
+command - nvm install --lts
+--To install the latest LTS version of Node.js
+
+To install specific version of node 
+
+command - nvm list-remote or nvm ls-remote
+--to check available node version
+
+command - nvm install 14.19.3
+--we need to mentions specific version like 14.19.3 or 16.15.0 to get this version use above command 
+
+command - nvm use 16.15.0
+
+using this 3 method we can install npm and regarding node version
+
+
+
+
+
+
+
