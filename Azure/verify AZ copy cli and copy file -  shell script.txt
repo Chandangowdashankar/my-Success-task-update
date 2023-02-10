@@ -1,0 +1,84 @@
+this script is to verify the installtiop of azcopy cli in ubuntu if its not means it will install the az copy cli
+and then using this script only we can achive the copy file from local to blob storage
+
+in that step it will read 2 content 
+1. local path of an file
+2. blob storage file with auth key it should validate the authentication
+
+or another way to achive this we need to re ad all the vaule 
+like local path and blob path with another read like key to access
+this code present in end of the line
+
+script with blob url and access in one line
+
+#!/bin/bash
+
+# Check if azcopy is installed
+if command -v azcopy > /dev/null 2>&1; then
+  echo "Azure CLI azcopy is already installed."
+else
+  echo "Azure CLI azcopy is not installed."
+  
+  # Install azcopy
+  echo "Installing azcopy..."
+  wget https://aka.ms/downloadazcopy-v10-linux
+  tar -xvf downloadazcopy-v10-linux
+  sudo rm -f /usr/bin/azcopy
+  sudo cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
+  sudo chmod 755 /usr/bin/azcopy
+  # clean downlode files
+  rm -f downloadazcopy-v10-linux
+  rm -rf ./azcopy_linux_amd64_*/
+
+  
+  # Verify installation
+  if command -v azcopy > /dev/null 2>&1; then
+    echo "Azure CLI azcopy is now installed and can be used."
+  else
+    echo "Installation of azcopy failed."
+    exit 1
+  fi
+fi
+
+
+# Prompt for the local file path
+read -p "Enter the local file path: " local_path
+
+# Prompt for the destination blob path
+read -p "Enter the destination blob path : " blob_path
+
+# Copy the file to the blob
+azcopy cp "$local_path" "$blob_path"
+
+# Verify the copy operation
+if [ $? -eq 0 ]; then
+  echo "File successfully copied to the blob."
+else
+  echo "File copy to the blob failed."
+fi
+
+
+
+************
+without access key in blob url
+
+script - 
+
+# Prompt for the local file path
+read -p "Enter the local file path: " local_path
+
+# Prompt for the destination blob path
+read -p "Enter the destination blob path (e.g. https://myaccount.blob.core.windows.net/mycontainer/myblob): " blob_path
+
+# Prompt for the storage account access key
+read -p "Enter the storage account access key: " access_key
+
+# Copy the file to the blob
+azcopy cp "$local_path" "$blob_path" --dest-key "$access_key"
+
+# Verify the copy operation
+if [ $? -eq 0 ]; then
+  echo "File successfully copied to the blob."
+else
+  echo "File copy to the blob failed."
+fi
